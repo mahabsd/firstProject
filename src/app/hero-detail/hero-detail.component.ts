@@ -7,7 +7,7 @@ import { map, startWith } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
-  selector: '[app-hero-detail]',
+  selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
   styleUrls: ['./hero-detail.component.css']
 })
@@ -17,21 +17,18 @@ export class HeroDetailComponent implements OnInit {
     this.filteredSkills = this.skillCtrl.valueChanges.pipe(
       startWith(null),
       map((skill: string | null) => skill ? this._filter(skill) : this.allskills.slice()));
-   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
 
   registrationForm = new FormGroup({
     userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
     skills: new FormArray([]),
     //ProfessionalExperience: new FormArray([]),
-  })
-  
+  });
+
   visible = true;
   selectable = true;
   removable = true;
@@ -51,7 +48,7 @@ export class HeroDetailComponent implements OnInit {
 
     // Add our skill
     if ((value || '').trim()) {
-    (this.registrationForm.get('skills') as FormArray ).push(new FormControl( value ,[Validators.required] ));
+      (this.registrationForm.get('skills') as FormArray).push(new FormControl(value, [Validators.required]));
     }
 
     // Reset the input value
@@ -77,6 +74,11 @@ export class HeroDetailComponent implements OnInit {
 
     return this.allskills.filter(skill => skill.toLowerCase().indexOf(filterValue) === 0);
   }
+
+
+ngOnInit(): void{
+
+}
 
 
 

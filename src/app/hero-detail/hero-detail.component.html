@@ -1,13 +1,13 @@
 
       <form [formGroup]=registrationForm>
-        
+
         <mat-form-field floatLabel="auto">
           <mat-label>nom</mat-label>
           <input matInput required formControlName="userName">
           <!-- <mat-error *ngIf="userName.errors?.required">This field is required</mat-error> -->
         </mat-form-field>
-     
-      
+
+
 
         <mat-form-field floatLabel="auto">
           <mat-label>email</mat-label>
@@ -15,7 +15,7 @@
           <!-- <mat-error *ngIf="email.errors?.required">This field is required</mat-error>
           <mat-error *ngIf="email.errors?.pattern"> Please provide a valid email address</mat-error> -->
         </mat-form-field>
-        
+
         <mat-form-field floatLabel="auto">
           <mat-label>mot de passe</mat-label>
           <input matInput required formControlName="password">
@@ -36,9 +36,11 @@
        <div formArrayName="skills">
         <mat-form-field class="example-chip-list">
           <mat-chip-list #chipList aria-label="skill selection">
-            <mat-chip *ngFor="let skill of registrationForm.get('skills').controls ; i = index " [selectable]="selectable" [removable]="removable"
+            <mat-chip *ngFor="let skill of registrationForm.get('skills').value; let i = index"
+             [selectable]="selectable"
+              [removable]="removable"
               (removed)="remove(i)">
-              {{skill.value}}
+              {{skill}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input placeholder="New skill..." #skillInput [formControl]="skillCtrl" [matAutocomplete]="auto"
@@ -51,7 +53,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-       
+
        </div>
        <button mat-raised-button color="accent" type="submit"> submit form</button>
        <!-- <button mat-raised-button (click)="loadApiData()" type="button">load data</button> -->
